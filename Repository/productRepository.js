@@ -33,7 +33,7 @@ const getMercadoLivreProdutcs = async(categoryId, description) => {
 					description: $(this).find('.ui-search-item__title').text().trim(),
 					price: Number(price_decimal.replace(".", "")),
 					link: $(this).find('a').attr("href"),
-					picture: $(this).find('.ui-search-result__image').find('img').attr('src')
+					image: $(this).find('.ui-search-result__image').find('img').attr('src')
 				};
 				results.push(result);
 			});
@@ -59,7 +59,7 @@ const getBuscapeProdutcs = async(categoryId, description) => {
 					description: $(elem).find('.Cell_Name__jnsS-').text().trim(),
 					price: Number(intValue + "." + cents),
 					link: "https://www.buscape.com.br" + $(elem).find('a').attr("href"),
-					picture: $(elem).find('.Cell_Image__2-Jrs').attr("src")
+					image: $(elem).find('.Cell_Image__2-Jrs').attr("src")
 				};
 				results.push(result);
 			});
@@ -79,7 +79,7 @@ const insertResultResarch = async(productsArray) => {
 
 const getProductsRepository = async({ storeId, categoryId, description }) => {
   const products = await Product.findAll(
-    { where: { storeId, categoryId, description: { [Op.substring]: description } }}
+    { where: { storeId, categoryId, description: { [Op.substring]: description } } }
   )
 
   if (products[0] === undefined) {
