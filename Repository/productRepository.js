@@ -49,11 +49,15 @@ const getBuscapeProdutcs = async(categoryId, description) => {
 			const $ = cheerio.load(html);
       const list = $('.Hits_SearchResultList__3ymoq')
       $('.Cell_Cell__1YAxR').each((i, elem) => {
-				let result = {
+        const priceString = $(elem).find(".CellPrice_MainValue__3s0iP").text().trim()
+        const intValue = (priceString).replace("R$ ", "").replace("\.", "").slice(0,-3)
+        const cents = priceString.substr(-2)
+
+				const result = {
           storeId: 2,
           categoryId,
 					description: $(elem).find('.Cell_Name__jnsS-').text().trim(),
-					price: $(elem).find(".CellPrice_MainValue__3s0iP").text().trim(),
+					price: Number(intValue + "." + cents),
 					link: "https://www.buscape.com.br" + $(elem).find('a').attr("href"),
 					picture: $(elem).find('.Cell_Image__2-Jrs').attr("src")
 				};
