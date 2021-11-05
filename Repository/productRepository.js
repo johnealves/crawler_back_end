@@ -79,9 +79,7 @@ const insertResultResarch = async(productsArray) => {
 
 const getProductsRepository = async({ storeId, categoryId, description }) => {
   const products = await Product.findAll(
-    { 
-      where: { storeId, categoryId, description: { [Op.substring]: description } }
-    }
+    { where: { storeId, categoryId, description: { [Op.substring]: description } } }
   )
 
   if (products[0] === undefined) {
@@ -89,11 +87,17 @@ const getProductsRepository = async({ storeId, categoryId, description }) => {
     if (storeId === 1) {
       const result = await getMercadoLivreProdutcs(categoryId, description);
       insertResultResarch(result);
-      return result;
+      const newFind = await Product.findAll(
+        { where: { storeId, categoryId, description: { [Op.substring]: description } } }
+      )
+      return newFind;
     } else if (storeId === 2)  {
       const result = await getBuscapeProdutcs(categoryId, description);
       insertResultResarch(result);
-      return result;
+      const newFind = await Product.findAll(
+        { where: { storeId, categoryId, description: { [Op.substring]: description } } }
+      )
+      return newFind;
     } else {
       return products
     }
